@@ -9,7 +9,244 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      features: {
+        Row: {
+          category: string
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      inquiries: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          message: string | null
+          name: string | null
+          phone: string | null
+          property_id: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string | null
+          phone?: string | null
+          property_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string | null
+          phone?: string | null
+          property_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inquiries_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      properties: {
+        Row: {
+          address: string | null
+          bathrooms: number | null
+          bedrooms: number | null
+          city: string
+          community_fee_month: number | null
+          created_at: string | null
+          description: string | null
+          dropbox_link: string | null
+          energy_rating: Database["public"]["Enums"]["energy_rating"] | null
+          featured: boolean | null
+          floor_number: number | null
+          id: string
+          internal_id: string | null
+          latitude: number | null
+          longitude: number | null
+          owner_id: string | null
+          plot_size_sqm: number | null
+          postal_code: string | null
+          price: number
+          property_tax_year: number | null
+          property_type: Database["public"]["Enums"]["property_type"]
+          region: string | null
+          size_sqm: number | null
+          status: Database["public"]["Enums"]["property_status"] | null
+          title: string
+          total_floors: number | null
+          total_rooms: number | null
+          updated_at: string | null
+          views_count: number | null
+        }
+        Insert: {
+          address?: string | null
+          bathrooms?: number | null
+          bedrooms?: number | null
+          city: string
+          community_fee_month?: number | null
+          created_at?: string | null
+          description?: string | null
+          dropbox_link?: string | null
+          energy_rating?: Database["public"]["Enums"]["energy_rating"] | null
+          featured?: boolean | null
+          floor_number?: number | null
+          id?: string
+          internal_id?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          owner_id?: string | null
+          plot_size_sqm?: number | null
+          postal_code?: string | null
+          price: number
+          property_tax_year?: number | null
+          property_type: Database["public"]["Enums"]["property_type"]
+          region?: string | null
+          size_sqm?: number | null
+          status?: Database["public"]["Enums"]["property_status"] | null
+          title: string
+          total_floors?: number | null
+          total_rooms?: number | null
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          address?: string | null
+          bathrooms?: number | null
+          bedrooms?: number | null
+          city?: string
+          community_fee_month?: number | null
+          created_at?: string | null
+          description?: string | null
+          dropbox_link?: string | null
+          energy_rating?: Database["public"]["Enums"]["energy_rating"] | null
+          featured?: boolean | null
+          floor_number?: number | null
+          id?: string
+          internal_id?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          owner_id?: string | null
+          plot_size_sqm?: number | null
+          postal_code?: string | null
+          price?: number
+          property_tax_year?: number | null
+          property_type?: Database["public"]["Enums"]["property_type"]
+          region?: string | null
+          size_sqm?: number | null
+          status?: Database["public"]["Enums"]["property_status"] | null
+          title?: string
+          total_floors?: number | null
+          total_rooms?: number | null
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      property_features: {
+        Row: {
+          feature_id: string
+          property_id: string
+        }
+        Insert: {
+          feature_id: string
+          property_id: string
+        }
+        Update: {
+          feature_id?: string
+          property_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_features_feature_id_fkey"
+            columns: ["feature_id"]
+            isOneToOne: false
+            referencedRelation: "features"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "property_features_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_media: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          is_main: boolean | null
+          media_type: string | null
+          position: number | null
+          property_id: string | null
+          title: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_main?: boolean | null
+          media_type?: string | null
+          position?: number | null
+          property_id?: string | null
+          title?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_main?: boolean | null
+          media_type?: string | null
+          position?: number | null
+          property_id?: string | null
+          title?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_media_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +255,21 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      energy_rating: "A" | "B" | "C" | "D" | "E" | "F" | "G"
+      property_status:
+        | "available"
+        | "under_contract"
+        | "sold"
+        | "rented"
+        | "off_market"
+      property_type:
+        | "apartment"
+        | "penthouse"
+        | "villa"
+        | "house"
+        | "townhouse"
+        | "commercial"
+        | "land"
     }
     CompositeTypes: {
       [_ in never]: never
