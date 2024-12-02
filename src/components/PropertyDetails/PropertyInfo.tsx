@@ -7,6 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useState } from "react";
 
 type Property = Database["public"]["Tables"]["properties"]["Row"] & {
   property_media: Database["public"]["Tables"]["property_media"]["Row"][];
@@ -20,6 +21,7 @@ interface PropertyInfoProps {
 }
 
 export const PropertyInfo = ({ property }: PropertyInfoProps) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const sortedMedia = [...(property.property_media || [])].sort((a, b) => {
     if (a.is_main && !b.is_main) return -1;
     if (!a.is_main && b.is_main) return 1;
@@ -47,27 +49,41 @@ export const PropertyInfo = ({ property }: PropertyInfoProps) => {
         </button>
       </div>
 
-      {/* Image Carousel */}
-      <div className="relative">
-        <Carousel className="w-full">
-          <CarouselContent>
-            {sortedMedia.map((media) => (
-              <CarouselItem key={media.id}>
-                <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
-                  <img
-                    src={media.url}
-                    alt={media.title || property.title}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="left-4" />
-          <CarouselNext className="right-4" />
-        </Carousel>
-        <div className="absolute top-4 right-8 bg-black/75 text-white px-4 py-2 rounded-full z-10">
-          €{property.price.toLocaleString()}
+      {/* Image Gallery */}
+      <div className="space-y-4">
+        {/* Main Image */}
+        <div className="relative">
+          <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
+            <img
+              src={sortedMedia[selectedImageIndex]?.url || "/placeholder.svg"}
+              alt={sortedMedia[selectedImageIndex]?.title || property.title}
+              className="object-cover w-full h-full"
+            />
+          </div>
+          <div className="absolute top-4 right-8 bg-black/75 text-white px-4 py-2 rounded-full z-10">
+            €{property.price.toLocaleString()}
+          </div>
+        </div>
+
+        {/* Thumbnail Gallery */}
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+          {sortedMedia.map((media, index) => (
+            <button
+              key={media.id}
+              onClick={() => setSelectedImageIndex(index)}
+              className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+                selectedImageIndex === index
+                  ? "border-primary ring-2 ring-primary ring-offset-2"
+                  : "border-transparent hover:border-primary/50"
+              }`}
+            >
+              <img
+                src={media.url}
+                alt={media.title || `Property image ${index + 1}`}
+                className="object-cover w-full h-full"
+              />
+            </button>
+          ))}
         </div>
       </div>
 
