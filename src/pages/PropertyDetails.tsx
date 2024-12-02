@@ -61,9 +61,9 @@ const PropertyDetails = () => {
   if (isLoading) {
     return (
       <div className="container mx-auto p-6 space-y-6">
-        <Skeleton className="h-8 w-64" />
-        <Skeleton className="h-64 w-full" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Skeleton className="h-12 w-64" />
+        <Skeleton className="h-[400px] w-full rounded-xl" />
+        <div className="grid grid-cols-2 gap-6">
           <Skeleton className="h-32" />
           <Skeleton className="h-32" />
         </div>
@@ -80,37 +80,34 @@ const PropertyDetails = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto p-6">
         {!isEditing ? (
           <>
-            <h1 className="text-3xl font-bold">{property.title}</h1>
-            <Button onClick={() => setIsEditing(true)}>
-              <Pencil className="mr-2 h-4 w-4" />
-              Edit Property
-            </Button>
+            <div className="flex justify-end mb-6">
+              <Button onClick={() => setIsEditing(true)}>
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit Property
+              </Button>
+            </div>
+            <PropertyInfo property={property} />
           </>
         ) : (
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold">Edit Property</h1>
-            <Button variant="ghost" onClick={() => setIsEditing(false)}>
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-3xl font-bold">Edit Property</h1>
+              <Button variant="ghost" onClick={() => setIsEditing(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <PropertyForm
+              initialData={property}
+              onSubmit={(values) => updateMutation.mutate(values)}
+              onImagesUpdated={handleImagesUpdated}
+            />
+          </>
         )}
       </div>
-
-      {isEditing ? (
-        <PropertyForm
-          initialData={property}
-          propertyId={id}
-          property={property}
-          onSubmit={(values) => updateMutation.mutate(values)}
-          onImagesUpdated={handleImagesUpdated}
-        />
-      ) : (
-        <PropertyInfo property={property} />
-      )}
     </div>
   );
 };
