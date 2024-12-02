@@ -24,7 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Pencil, Save, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -91,7 +91,7 @@ const PropertyDetails = () => {
   });
 
   // Update form when property data is loaded
-  useState(() => {
+  useEffect(() => {
     if (property) {
       form.reset({
         title: property.title,
