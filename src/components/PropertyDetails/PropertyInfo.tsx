@@ -4,6 +4,7 @@ import { PropertyGallery } from "./PropertyGallery";
 import { PropertyOverview } from "./PropertyOverview";
 import { PropertyFeatures } from "./PropertyFeatures";
 import { PropertyDetails } from "./PropertyDetails";
+import { ContactForm } from "./ContactForm";
 
 type Property = Database["public"]["Tables"]["properties"]["Row"] & {
   property_media: Database["public"]["Tables"]["property_media"]["Row"][];
@@ -51,6 +52,8 @@ export const PropertyInfo = ({ property }: PropertyInfoProps) => {
       />
 
       <PropertyFeatures features={property.property_features} />
+
+      <ContactForm propertyId={property.id} propertyTitle={property.title} />
     </div>
   );
 };

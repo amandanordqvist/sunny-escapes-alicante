@@ -256,6 +256,7 @@ export type Database = {
     }
     Enums: {
       energy_rating: "A" | "B" | "C" | "D" | "E" | "F" | "G"
+      inquiry_status: "new" | "in_progress" | "completed" | "cancelled"
       property_status:
         | "available"
         | "under_contract"
