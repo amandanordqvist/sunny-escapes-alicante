@@ -22,10 +22,6 @@ import {
 import { Save } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
 
-type PropertyType = Database["public"]["Enums"]["property_type"];
-type PropertyStatus = Database["public"]["Enums"]["property_status"];
-type EnergyRating = Database["public"]["Enums"]["energy_rating"];
-
 const propertySchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
@@ -69,11 +65,10 @@ const propertySchema = z.object({
 export type PropertyFormValues = z.infer<typeof propertySchema>;
 
 interface PropertyFormProps {
-  initialData?: Partial<PropertyFormValues>;
   onSubmit: (values: PropertyFormValues) => void;
 }
 
-export const PropertyForm = ({ initialData, onSubmit }: PropertyFormProps) => {
+export const PropertyForm = ({ onSubmit }: PropertyFormProps) => {
   const form = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
@@ -93,9 +88,10 @@ export const PropertyForm = ({ initialData, onSubmit }: PropertyFormProps) => {
       community_fee_month: 0,
       featured: false,
       city: "",
-      ...initialData,
     },
   });
+
+  // ... keep existing code (form fields JSX)
 
   return (
     <Form {...form}>
@@ -536,7 +532,7 @@ export const PropertyForm = ({ initialData, onSubmit }: PropertyFormProps) => {
 
         <Button type="submit" className="w-full">
           <Save className="mr-2 h-4 w-4" />
-          Save Changes
+          Create Property
         </Button>
       </form>
     </Form>
