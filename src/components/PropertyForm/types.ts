@@ -1,4 +1,12 @@
 import { z } from "zod";
+import type { Database } from "@/integrations/supabase/types";
+
+type Property = Database["public"]["Tables"]["properties"]["Row"] & {
+  property_media: Database["public"]["Tables"]["property_media"]["Row"][];
+  property_features: {
+    features: Database["public"]["Tables"]["features"]["Row"];
+  }[];
+};
 
 export const propertySchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -41,3 +49,11 @@ export const propertySchema = z.object({
 });
 
 export type PropertyFormValues = z.infer<typeof propertySchema>;
+
+export interface PropertyFormProps {
+  initialData?: Partial<PropertyFormValues>;
+  propertyId?: string;
+  property?: Property;
+  onSubmit: (values: PropertyFormValues) => void;
+  onImagesUpdated?: () => void;
+}

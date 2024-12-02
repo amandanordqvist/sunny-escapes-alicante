@@ -7,20 +7,7 @@ import { BasicInfoForm } from "./BasicInfoForm";
 import { DetailsForm } from "./DetailsForm";
 import { LocationForm } from "./LocationForm";
 import { ImageUpload } from "./ImageUpload";
-import { propertySchema, type PropertyFormValues } from "./types";
-import type { Database } from "@/integrations/supabase/types";
-
-type Property = Database["public"]["Tables"]["properties"]["Row"] & {
-  property_media: Database["public"]["Tables"]["property_media"]["Row"][];
-};
-
-interface PropertyFormProps {
-  initialData?: Partial<PropertyFormValues>;
-  propertyId?: string;
-  property?: Property;
-  onSubmit: (values: PropertyFormValues) => void;
-  onImagesUpdated?: () => void;
-}
+import { propertySchema, type PropertyFormProps } from "./types";
 
 export const PropertyForm = ({
   initialData,
@@ -29,7 +16,7 @@ export const PropertyForm = ({
   onSubmit,
   onImagesUpdated,
 }: PropertyFormProps) => {
-  const form = useForm<PropertyFormValues>({
+  const form = useForm({
     resolver: zodResolver(propertySchema),
     defaultValues: {
       title: "",
@@ -63,7 +50,7 @@ export const PropertyForm = ({
           <ImageUpload
             propertyId={propertyId}
             existingMedia={property?.property_media || []}
-            onImagesUpdated={onImagesUpdated || (() => {})}
+            onImagesUpdated={onImagesUpdated}
           />
         )}
 
