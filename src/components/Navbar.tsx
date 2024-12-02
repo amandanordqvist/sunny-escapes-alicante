@@ -1,84 +1,98 @@
-import { Home, Search, User, Menu, X } from "lucide-react";
-import { Button } from "./ui/button";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isLandingPage = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navClasses = isLandingPage
+    ? "fixed w-full z-50 transition-all duration-300"
+    : "relative w-full bg-white border-b";
+
+  const textClasses = isLandingPage ? "text-white" : "text-gray-900";
+  const buttonClasses = isLandingPage
+    ? "bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm"
+    : "bg-gray-100 hover:bg-gray-200 text-gray-900";
+
+  const mobileMenuClasses = isLandingPage
+    ? "bg-black/20 backdrop-blur-sm"
+    : "bg-white border-t";
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b shadow-sm">
+    <nav className={navClasses}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <Home className="h-6 w-6 text-primary" />
-            <span className="font-bold text-xl">Sunny Escapes</span>
+        <div className="flex h-16 items-center justify-between">
+          <Link to="/" className={`text-xl font-bold ${textClasses}`}>
+            Sunny Escapes
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link to="/properties" className="text-gray-600 hover:text-primary">
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/properties" className={`${textClasses} hover:opacity-80`}>
               Properties
             </Link>
-            <Link to="/about" className="text-gray-600 hover:text-primary">
-              About Us
+            <Link to="/about" className={`${textClasses} hover:opacity-80`}>
+              About
             </Link>
-            <Link to="/contact" className="text-gray-600 hover:text-primary">
+            <Link to="/contact" className={`${textClasses} hover:opacity-80`}>
               Contact
             </Link>
-            <Button variant="outline" size="sm">
-              <Search className="h-4 w-4 mr-2" />
-              Search
-            </Button>
-            <Button>
-              <User className="h-4 w-4 mr-2" />
+            <Button className={buttonClasses}>
               Sign In
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            <Menu className={textClasses} />
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 space-y-4">
-            <Link
-              to="/properties"
-              className="block text-gray-600 hover:text-primary py-2"
-            >
-              Properties
-            </Link>
-            <Link
-              to="/about"
-              className="block text-gray-600 hover:text-primary py-2"
-            >
-              About Us
-            </Link>
-            <Link
-              to="/contact"
-              className="block text-gray-600 hover:text-primary py-2"
-            >
-              Contact
-            </Link>
-            <div className="space-y-2">
-              <Button variant="outline" className="w-full">
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
-              <Button className="w-full">
-                <User className="h-4 w-4 mr-2" />
-                Sign In
-              </Button>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className={`md:hidden py-4 ${mobileMenuClasses}`}>
+            <div className="flex flex-col gap-4">
+              <Link
+                to="/properties"
+                className={`px-4 py-2 ${textClasses} hover:opacity-80`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Properties
+              </Link>
+              <Link
+                to="/about"
+                className={`px-4 py-2 ${textClasses} hover:opacity-80`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                to="/contact"
+                className={`px-4 py-2 ${textClasses} hover:opacity-80`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              <div className="px-4 py-2">
+                <Button className={`w-full ${buttonClasses}`}>
+                  Sign In
+                </Button>
+              </div>
             </div>
           </div>
         )}

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Bath, BedDouble, Ruler } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -33,25 +33,27 @@ export const FeaturedProperties = () => {
 
   if (isLoading) {
     return (
-      <section className="py-20 bg-accent/30">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4">Featured Properties</h2>
-          <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-            Explore our handpicked selection of premium properties in the most sought-after locations
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-bold">Featured Properties</h2>
+            <Button variant="outline" onClick={() => navigate("/properties")}>
+              View all properties
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
               <Card key={i} className="animate-pulse">
-                <div className="aspect-[4/3] bg-muted"></div>
-                <CardHeader>
-                  <div className="h-4 bg-muted rounded w-3/4"></div>
-                  <div className="h-6 bg-muted rounded w-1/2 mt-2"></div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-muted rounded"></div>
-                    <div className="h-8 bg-muted rounded"></div>
+                <div className="aspect-[4/3] bg-muted rounded-t-lg"></div>
+                <CardContent className="p-4">
+                  <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                  <div className="h-6 bg-muted rounded w-1/2 mb-4"></div>
+                  <div className="flex justify-between mb-4">
+                    <div className="h-4 bg-muted rounded w-16"></div>
+                    <div className="h-4 bg-muted rounded w-16"></div>
+                    <div className="h-4 bg-muted rounded w-16"></div>
                   </div>
+                  <div className="h-9 bg-muted rounded"></div>
                 </CardContent>
               </Card>
             ))}
@@ -66,46 +68,53 @@ export const FeaturedProperties = () => {
   }
 
   return (
-    <section className="py-20 bg-accent/30">
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-4">Featured Properties</h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-          Explore our handpicked selection of premium properties in the most sought-after locations
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold">Featured Properties</h2>
+          <Button variant="outline" onClick={() => navigate("/properties")}>
+            View all properties
+          </Button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {properties.map((property) => (
             <Card 
               key={property.id}
-              className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden animate-fade-in"
+              className="overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer"
               onClick={() => navigate(`/properties/${property.id}`)}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
-                  src={property.property_media?.[0]?.url || "/placeholder.svg"}
+                  src={property.property_media?.[0]?.url || "/placeholder.jpg"}
                   alt={property.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                 />
               </div>
-              <CardHeader>
-                <CardTitle className="line-clamp-1">{property.title}</CardTitle>
-                <p className="text-2xl font-bold text-primary">€{property.price.toLocaleString()}</p>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-between text-sm text-muted-foreground mb-4">
+              <CardContent className="p-4">
+                <h3 className="font-semibold text-lg mb-1 line-clamp-1">
+                  {property.title}
+                </h3>
+                <p className="text-2xl font-bold text-primary mb-4">
+                  €{property.price.toLocaleString()}
+                </p>
+                <div className="flex justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center gap-1">
                     <BedDouble className="h-4 w-4" />
-                    <span>{property.bedrooms} beds</span>
+                    <span>{property.bedrooms}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Bath className="h-4 w-4" />
-                    <span>{property.bathrooms} baths</span>
+                    <span>{property.bathrooms}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Ruler className="h-4 w-4" />
                     <span>{property.size_sqm}m²</span>
                   </div>
                 </div>
-                <Button variant="secondary" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full hover:bg-primary hover:text-primary-foreground"
+                >
                   View Details
                 </Button>
               </CardContent>
