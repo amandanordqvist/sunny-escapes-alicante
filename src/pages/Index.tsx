@@ -2,11 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Home, Bath, BedDouble, Ruler, LayoutGrid, List, SlidersHorizontal } from "lucide-react";
+import { Home, Bath, BedDouble, Ruler, LayoutGrid, List } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [view, setView] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("newest");
   const [propertyType, setPropertyType] = useState("all");
@@ -81,7 +83,10 @@ const Index = () => {
       "/placeholder.svg";
 
     return (
-      <Card className={`overflow-hidden hover:shadow-lg transition-shadow ${isList ? 'flex flex-row' : ''}`}>
+      <Card 
+        className={`overflow-hidden hover:shadow-lg transition-shadow cursor-pointer ${isList ? 'flex flex-row' : ''}`}
+        onClick={() => navigate(`/properties/${property.id}`)}
+      >
         <div className={`relative ${isList ? 'w-72' : 'h-48'}`}>
           <img
             src={mainImage}
