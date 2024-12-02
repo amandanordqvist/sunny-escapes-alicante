@@ -1,6 +1,10 @@
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
 
+type PropertyType = Database["public"]["Enums"]["property_type"];
+type PropertyStatus = Database["public"]["Enums"]["property_status"];
+type EnergyRating = Database["public"]["Enums"]["energy_rating"];
+
 type Property = Database["public"]["Tables"]["properties"]["Row"] & {
   property_media: Database["public"]["Tables"]["property_media"]["Row"][];
   property_features: {
@@ -20,14 +24,14 @@ export const propertySchema = z.object({
     "townhouse",
     "commercial",
     "land",
-  ] as const),
+  ] as const satisfies readonly PropertyType[]),
   status: z.enum([
     "available",
     "under_contract",
     "sold",
     "rented",
     "off_market",
-  ] as const).optional(),
+  ] as const satisfies readonly PropertyStatus[]).optional(),
   size_sqm: z.number().min(0).optional(),
   plot_size_sqm: z.number().min(0).optional(),
   floor_number: z.number().min(0).optional(),
@@ -35,7 +39,7 @@ export const propertySchema = z.object({
   total_rooms: z.number().min(0).optional(),
   bedrooms: z.number().min(0).optional(),
   bathrooms: z.number().min(0).optional(),
-  energy_rating: z.enum(["A", "B", "C", "D", "E", "F", "G"] as const).optional(),
+  energy_rating: z.enum(["A", "B", "C", "D", "E", "F", "G"] as const satisfies readonly EnergyRating[]).optional(),
   property_tax_year: z.number().min(0).optional(),
   community_fee_month: z.number().min(0).optional(),
   dropbox_link: z.string().optional(),
