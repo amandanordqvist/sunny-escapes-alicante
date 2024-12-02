@@ -7,26 +7,29 @@ import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Index from "./pages/Index";
 import PropertyDetails from "./pages/PropertyDetails";
+import { StrictMode } from "react";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Navbar />
-        <div className="pt-16">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/properties" element={<Index />} />
-            <Route path="/properties/:id" element={<PropertyDetails />} />
-          </Routes>
-        </div>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Navbar />
+          <div className="pt-16">
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/properties" element={<Index />} />
+              <Route path="/properties/:id" element={<PropertyDetails />} />
+            </Routes>
+          </div>
+        </TooltipProvider>
       </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </StrictMode>
 );
 
 export default App;
