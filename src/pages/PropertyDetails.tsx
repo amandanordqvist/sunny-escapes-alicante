@@ -112,8 +112,6 @@ const PropertyDetails = () => {
             </div>
             <PropertyForm
               initialData={property}
-              propertyId={id}
-              property={property}
               onSubmit={(values) => updateMutation.mutate(values)}
               onImagesUpdated={handleImagesUpdated}
             />
