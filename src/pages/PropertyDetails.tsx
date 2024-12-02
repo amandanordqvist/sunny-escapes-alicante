@@ -6,8 +6,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { Pencil, X } from "lucide-react";
 import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { PropertyForm, type PropertyFormValues } from "@/components/PropertyForm";
+import { PropertyForm } from "@/components/PropertyForm";
 import { PropertyInfo } from "@/components/PropertyDetails/PropertyInfo";
+import type { PropertyFormValues } from "@/components/PropertyForm/types";
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -74,6 +75,10 @@ const PropertyDetails = () => {
     return <div>Property not found</div>;
   }
 
+  const handleImagesUpdated = () => {
+    queryClient.invalidateQueries({ queryKey: ["property", id] });
+  };
+
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
@@ -98,7 +103,10 @@ const PropertyDetails = () => {
       {isEditing ? (
         <PropertyForm
           initialData={property}
+          propertyId={id}
+          property={property}
           onSubmit={(values) => updateMutation.mutate(values)}
+          onImagesUpdated={handleImagesUpdated}
         />
       ) : (
         <PropertyInfo property={property} />
