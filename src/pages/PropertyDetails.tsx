@@ -11,7 +11,7 @@ import { PropertyInfo } from "@/components/PropertyDetails/PropertyInfo";
 import type { PropertyFormValues } from "@/components/PropertyForm/types";
 
 const PropertyDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const queryClient = useQueryClient();
@@ -19,21 +19,30 @@ const PropertyDetails = () => {
   const { data: property, isLoading } = useQuery({
     queryKey: ["property", id],
     queryFn: async () => {
+      if (!id) throw new Error("No property ID provided");
+      
       const { data, error } = await supabase
         .from("properties")
-        .select(
-          `*, property_media(*), property_features(features(*))`
-        )
+        .select(`
+          *,
+          property_media(*),
+          property_features(
+            features(*)
+          )
+        `)
         .eq("id", id)
         .single();
 
       if (error) throw error;
       return data;
     },
+    enabled: !!id,
   });
 
   const updateMutation = useMutation({
     mutationFn: async (values: PropertyFormValues) => {
+      if (!id) throw new Error("No property ID provided");
+      
       const { error } = await supabase
         .from("properties")
         .update(values)
@@ -50,6 +59,7 @@ const PropertyDetails = () => {
       setIsEditing(false);
     },
     onError: (error) => {
+      console.error("Update error:", error);
       toast({
         title: "Error",
         description: "Failed to update property",
@@ -102,10 +112,10 @@ const PropertyDetails = () => {
             </div>
             <PropertyForm
               initialData={property}
-              propertyId={id}
-              property={property}
               onSubmit={(values) => updateMutation.mutate(values)}
               onImagesUpdated={handleImagesUpdated}
+              property={property}
+              propertyId={id}
             />
           </>
         )}
