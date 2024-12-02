@@ -1,5 +1,12 @@
 import type { Database } from "@/integrations/supabase/types";
 import { Star, Share2, BedDouble, Bath, Grid, CarFront } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type Property = Database["public"]["Tables"]["properties"]["Row"] & {
   property_media: Database["public"]["Tables"]["property_media"]["Row"][];
@@ -13,6 +20,12 @@ interface PropertyInfoProps {
 }
 
 export const PropertyInfo = ({ property }: PropertyInfoProps) => {
+  const sortedMedia = [...(property.property_media || [])].sort((a, b) => {
+    if (a.is_main && !b.is_main) return -1;
+    if (!a.is_main && b.is_main) return 1;
+    return 0;
+  });
+
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Header Section */}
@@ -34,18 +47,26 @@ export const PropertyInfo = ({ property }: PropertyInfoProps) => {
         </button>
       </div>
 
-      {/* Main Image */}
-      <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
-        <img
-          src={
-            property.property_media?.find((media) => media.is_main)?.url ||
-            property.property_media?.[0]?.url ||
-            "/placeholder.svg"
-          }
-          alt={property.title}
-          className="object-cover w-full h-full"
-        />
-        <div className="absolute top-4 right-4 bg-black/75 text-white px-4 py-2 rounded-full">
+      {/* Image Carousel */}
+      <div className="relative">
+        <Carousel className="w-full">
+          <CarouselContent>
+            {sortedMedia.map((media) => (
+              <CarouselItem key={media.id}>
+                <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
+                  <img
+                    src={media.url}
+                    alt={media.title || property.title}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-4" />
+          <CarouselNext className="right-4" />
+        </Carousel>
+        <div className="absolute top-4 right-8 bg-black/75 text-white px-4 py-2 rounded-full z-10">
           €{property.price.toLocaleString()}
         </div>
       </div>
