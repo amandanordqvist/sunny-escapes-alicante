@@ -10,17 +10,9 @@ const AddProperty = () => {
 
   const handleSubmit = async (values: PropertyFormValues) => {
     try {
-      // Ensure required fields are present
-      const propertyData = {
-        ...values,
-        city: values.city || "", // Ensure city is not undefined
-        price: values.price || 0, // Ensure price is not undefined
-        property_type: values.property_type || "apartment", // Ensure property_type is not undefined
-      };
-
       const { data, error } = await supabase
         .from("properties")
-        .insert(propertyData)
+        .insert(values)
         .select()
         .single();
 

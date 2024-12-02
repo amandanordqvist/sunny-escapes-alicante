@@ -43,12 +43,17 @@ export const propertySchema = z.object({
   region: z.string().optional(),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
+  internal_id: z.string().optional(),
+  owner_id: z.string().uuid().optional(),
+  views_count: z.number().optional(),
 });
 
 export type PropertyFormValues = z.infer<typeof propertySchema>;
 
 export interface PropertyFormProps {
   initialData?: Partial<PropertyFormValues>;
+  propertyId?: string;
+  property?: any;
   onSubmit: (values: PropertyFormValues) => void;
   onImagesUpdated?: () => void;
 }
