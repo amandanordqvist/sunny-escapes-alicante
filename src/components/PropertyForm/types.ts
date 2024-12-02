@@ -31,7 +31,7 @@ export const propertySchema = z.object({
     "sold",
     "rented",
     "off_market",
-  ] as const satisfies readonly PropertyStatus[]).optional(),
+  ] as const satisfies readonly PropertyStatus[]),
   size_sqm: z.number().min(0).optional(),
   plot_size_sqm: z.number().min(0).optional(),
   floor_number: z.number().min(0).optional(),
