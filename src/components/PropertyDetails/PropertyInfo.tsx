@@ -1,12 +1,5 @@
 import type { Database } from "@/integrations/supabase/types";
 import { Star, Share2, BedDouble, Bath, Grid, CarFront } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { useState } from "react";
 
 type Property = Database["public"]["Tables"]["properties"]["Row"] & {
@@ -50,38 +43,41 @@ export const PropertyInfo = ({ property }: PropertyInfoProps) => {
       </div>
 
       {/* Image Gallery */}
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Main Image */}
         <div className="relative">
-          <div className="aspect-[16/9] relative rounded-xl overflow-hidden">
+          <div className="aspect-[4/3] relative rounded-xl overflow-hidden">
             <img
               src={sortedMedia[selectedImageIndex]?.url || "/placeholder.svg"}
               alt={sortedMedia[selectedImageIndex]?.title || property.title}
               className="object-cover w-full h-full"
             />
           </div>
-          <div className="absolute top-4 right-8 bg-black/75 text-white px-4 py-2 rounded-full z-10">
+          <div className="absolute top-4 right-4 bg-black/75 text-white px-4 py-2 rounded-full z-10">
             €{property.price.toLocaleString()}
           </div>
         </div>
 
-        {/* Thumbnail Gallery */}
-        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
-          {sortedMedia.map((media, index) => (
+        {/* Thumbnail Grid */}
+        <div className="grid grid-cols-2 gap-2 h-full">
+          {sortedMedia.slice(0, 4).map((media, index) => (
             <button
               key={media.id}
               onClick={() => setSelectedImageIndex(index)}
-              className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                selectedImageIndex === index
-                  ? "border-primary ring-2 ring-primary ring-offset-2"
-                  : "border-transparent hover:border-primary/50"
+              className={`aspect-[4/3] rounded-lg overflow-hidden relative group ${
+                index > 3 ? "hidden" : ""
               }`}
             >
               <img
                 src={media.url}
                 alt={media.title || `Property image ${index + 1}`}
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full group-hover:opacity-90 transition-opacity"
               />
+              {index === 3 && sortedMedia.length > 4 && (
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-semibold">
+                  +{sortedMedia.length - 4} more
+                </div>
+              )}
             </button>
           ))}
         </div>
