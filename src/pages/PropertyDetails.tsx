@@ -26,6 +26,9 @@ import * as z from "zod";
 import { Pencil, Save, X } from "lucide-react";
 import { useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { Database } from "@/integrations/supabase/types";
+
+type PropertyType = Database["public"]["Enums"]["property_type"];
 
 const propertySchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -39,13 +42,15 @@ const propertySchema = z.object({
     "townhouse",
     "commercial",
     "land",
-  ]),
+  ] as const),
   bedrooms: z.number().min(0).optional(),
   bathrooms: z.number().min(0).optional(),
   size_sqm: z.number().min(0).optional(),
   address: z.string().optional(),
   city: z.string().min(1, "City is required"),
 });
+
+type PropertyFormValues = z.infer<typeof propertySchema>;
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -70,7 +75,7 @@ const PropertyDetails = () => {
     },
   });
 
-  const form = useForm({
+  const form = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
       title: "",
@@ -86,7 +91,7 @@ const PropertyDetails = () => {
   });
 
   // Update form when property data is loaded
-  React.useEffect(() => {
+  useState(() => {
     if (property) {
       form.reset({
         title: property.title,
@@ -103,7 +108,7 @@ const PropertyDetails = () => {
   }, [property, form]);
 
   const updateMutation = useMutation({
-    mutationFn: async (values: z.infer<typeof propertySchema>) => {
+    mutationFn: async (values: PropertyFormValues) => {
       const { error } = await supabase
         .from("properties")
         .update(values)
