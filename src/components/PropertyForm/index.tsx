@@ -7,7 +7,7 @@ import { BasicInfoForm } from "./BasicInfoForm";
 import { DetailsForm } from "./DetailsForm";
 import { LocationForm } from "./LocationForm";
 import { ImageUpload } from "./ImageUpload";
-import { propertySchema, type PropertyFormProps, type PropertyFormValues } from "./types";
+import { propertySchema, type PropertyFormProps } from "./types";
 
 export const PropertyForm = ({
   initialData,
@@ -16,7 +16,7 @@ export const PropertyForm = ({
   onSubmit,
   onImagesUpdated,
 }: PropertyFormProps) => {
-  const form = useForm<PropertyFormValues>({
+  const form = useForm({
     resolver: zodResolver(propertySchema),
     defaultValues: {
       title: "",

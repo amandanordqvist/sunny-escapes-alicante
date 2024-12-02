@@ -58,6 +58,10 @@ const PropertyDetails = () => {
     },
   });
 
+  const handleImagesUpdated = () => {
+    queryClient.invalidateQueries({ queryKey: ["property", id] });
+  };
+
   if (isLoading) {
     return (
       <div className="container mx-auto p-6 space-y-6">
@@ -74,10 +78,6 @@ const PropertyDetails = () => {
   if (!property) {
     return <div>Property not found</div>;
   }
-
-  const handleImagesUpdated = () => {
-    queryClient.invalidateQueries({ queryKey: ["property", id] });
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -102,6 +102,8 @@ const PropertyDetails = () => {
             </div>
             <PropertyForm
               initialData={property}
+              propertyId={id}
+              property={property}
               onSubmit={(values) => updateMutation.mutate(values)}
               onImagesUpdated={handleImagesUpdated}
             />
