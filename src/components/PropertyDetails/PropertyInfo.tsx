@@ -43,43 +43,47 @@ export const PropertyInfo = ({ property }: PropertyInfoProps) => {
       </div>
 
       {/* Image Gallery */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Main Image */}
-        <div className="relative">
-          <div className="aspect-[4/3] relative rounded-xl overflow-hidden">
-            <img
-              src={sortedMedia[selectedImageIndex]?.url || "/placeholder.svg"}
-              alt={sortedMedia[selectedImageIndex]?.title || property.title}
-              className="object-cover w-full h-full"
-            />
-          </div>
-          <div className="absolute top-4 right-4 bg-black/75 text-white px-4 py-2 rounded-full z-10">
-            €{property.price.toLocaleString()}
-          </div>
-        </div>
-
-        {/* Thumbnail Grid */}
-        <div className="grid grid-cols-2 gap-2 h-full">
-          {sortedMedia.slice(0, 4).map((media, index) => (
-            <button
-              key={media.id}
-              onClick={() => setSelectedImageIndex(index)}
-              className={`aspect-[4/3] rounded-lg overflow-hidden relative group ${
-                index > 3 ? "hidden" : ""
-              }`}
-            >
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Main Image */}
+          <div className="md:col-span-2">
+            <div className="aspect-[4/3] relative rounded-xl overflow-hidden">
               <img
-                src={media.url}
-                alt={media.title || `Property image ${index + 1}`}
-                className="object-cover w-full h-full group-hover:opacity-90 transition-opacity"
+                src={sortedMedia[selectedImageIndex]?.url || "/placeholder.svg"}
+                alt={sortedMedia[selectedImageIndex]?.title || property.title}
+                className="object-cover w-full h-full"
               />
-              {index === 3 && sortedMedia.length > 4 && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-semibold">
-                  +{sortedMedia.length - 4} more
-                </div>
-              )}
-            </button>
-          ))}
+              <div className="absolute top-4 right-4 bg-black/75 text-white px-4 py-2 rounded-full">
+                €{property.price.toLocaleString()}
+              </div>
+            </div>
+          </div>
+
+          {/* Thumbnail Grid */}
+          <div className="grid grid-cols-2 gap-2">
+            {sortedMedia.slice(0, 4).map((media, index) => (
+              <button
+                key={media.id}
+                onClick={() => setSelectedImageIndex(index)}
+                className={`aspect-[4/3] rounded-lg overflow-hidden relative group ${
+                  selectedImageIndex === index
+                    ? "ring-2 ring-primary"
+                    : "hover:opacity-90"
+                }`}
+              >
+                <img
+                  src={media.url}
+                  alt={media.title || `Property image ${index + 1}`}
+                  className="object-cover w-full h-full"
+                />
+                {index === 3 && sortedMedia.length > 4 && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-semibold">
+                    +{sortedMedia.length - 4} more
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
