@@ -5,8 +5,8 @@
   --radius-lg: 16px;
 
   /* Colors */
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
+  --color-primary: #181717;
+  --color-primary-hover: #262626;
   --color-secondary: #64748b;
   --color-secondary-hover: #475569;
   
@@ -17,7 +17,7 @@
   --bg-dark: #1a1a1a;
   
   /* Text Colors */
-  --text-primary: #1f2937;
+  --text-primary: #181717;
   --text-secondary: #4b5563;
   --text-light: #9ca3af;
   --text-white: #ffffff;
