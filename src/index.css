@@ -4,65 +4,65 @@
 
 @layer base {
   :root {
-    --background: 220 33% 99%;
-    --foreground: 220 10% 15%;
+    --background: 0 0% 99%;
+    --foreground: 0 0% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 10% 15%;
+    --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 15%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 220 10% 45%;
+    --primary: 0 0% 9%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 5% 95%;
-    --secondary-foreground: 220 10% 15%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 220 5% 95%;
-    --muted-foreground: 220 5% 45%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 220 5% 95%;
-    --accent-foreground: 220 10% 15%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 90%;
-    --input: 220 10% 90%;
-    --ring: 220 10% 45%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 9%;
 
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 220 10% 10%;
+    --background: 0 0% 9%;
     --foreground: 0 0% 95%;
 
-    --card: 220 10% 12%;
+    --card: 0 0% 11%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 220 10% 12%;
+    --popover: 0 0% 11%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 220 10% 65%;
-    --primary-foreground: 220 10% 15%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 220 5% 15%;
+    --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 220 5% 15%;
-    --muted-foreground: 220 5% 65%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 220 5% 15%;
+    --accent: 0 0% 15%;
     --accent-foreground: 0 0% 95%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 95%;
 
-    --border: 220 5% 20%;
-    --input: 220 5% 20%;
-    --ring: 220 10% 65%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 95%;
   }
 }
 
