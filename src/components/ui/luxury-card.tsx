@@ -1,52 +1,53 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion, HTMLMotionProps } from "framer-motion";
 
-const LuxuryCard = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
-    hover?: boolean;
-    animation?: "fade" | "slide" | "scale";
+interface LuxuryCardProps extends HTMLMotionProps<"div"> {
+  hover?: boolean;
+  animation?: "fade" | "slide" | "scale";
+}
+
+const LuxuryCard = React.forwardRef<HTMLDivElement, LuxuryCardProps>(
+  ({ className, hover = true, animation, ...props }, ref) => {
+    const getAnimationVariants = () => {
+      switch (animation) {
+        case "fade":
+          return {
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0 },
+          };
+        case "slide":
+          return {
+            hidden: { opacity: 0, x: -20 },
+            visible: { opacity: 1, x: 0 },
+          };
+        case "scale":
+          return {
+            hidden: { opacity: 0, scale: 0.95 },
+            visible: { opacity: 1, scale: 1 },
+          };
+        default:
+          return {};
+      }
+    };
+
+    return (
+      <motion.div
+        ref={ref}
+        initial={animation ? "hidden" : false}
+        animate={animation ? "visible" : false}
+        variants={getAnimationVariants()}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className={cn(
+          "bg-white/80 backdrop-blur-sm border border-luxury-200/20 rounded-xl shadow-lg",
+          hover && "hover:shadow-xl transition-all duration-300 hover:-translate-y-1",
+          className
+        )}
+        {...props}
+      />
+    );
   }
->(({ className, hover = true, animation, ...props }, ref) => {
-  const getAnimationVariants = () => {
-    switch (animation) {
-      case "fade":
-        return {
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0 },
-        };
-      case "slide":
-        return {
-          hidden: { opacity: 0, x: -20 },
-          visible: { opacity: 1, x: 0 },
-        };
-      case "scale":
-        return {
-          hidden: { opacity: 0, scale: 0.95 },
-          visible: { opacity: 1, scale: 1 },
-        };
-      default:
-        return {};
-    }
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={animation ? "hidden" : false}
-      animate={animation ? "visible" : false}
-      variants={getAnimationVariants()}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className={cn(
-        "bg-white/80 backdrop-blur-sm border border-luxury-200/20 rounded-xl shadow-lg",
-        hover && "hover:shadow-xl transition-all duration-300 hover:-translate-y-1",
-        className
-      )}
-      {...props}
-    />
-  );
-});
+);
 LuxuryCard.displayName = "LuxuryCard";
 
 const LuxuryCardHeader = React.forwardRef<
