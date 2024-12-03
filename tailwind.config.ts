@@ -19,23 +19,23 @@ export default {
     },
     extend: {
       colors: {
-        // Updated luxury color palette
+        // Scandinavian-inspired luxury palette
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         luxury: {
-          50: '#F7F5FF',
-          100: '#E9E5FF',
-          200: '#D3CBFF',
-          300: '#B7A8FF',
-          400: '#9B87F5',
-          500: '#7E69AB',
-          600: '#6E59A5',
-          700: '#1A1F2C',
-          800: '#151821',
-          900: '#0F1117',
+          50: '#F9FAFB',  // Almost white
+          100: '#F3F4F6', // Light gray
+          200: '#E5E7EB', // Lighter gray
+          300: '#D1D5DB', // Medium gray
+          400: '#9BA3AF', // Warm gray
+          500: '#6B7280', // Main accent
+          600: '#4B5563', // Deep accent
+          700: '#374151', // Dark accent
+          800: '#1F2937', // Nearly black
+          900: '#111827', // True black
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
