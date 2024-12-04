@@ -108,6 +108,73 @@
   .animate-on-scroll.in-view {
     @apply opacity-100 translate-y-0;
   }
+
+  /* Modern Button Styles */
+  .btn-primary {
+    @apply px-6 py-3 bg-[#181717] text-white rounded-lg 
+    hover:bg-[#262626] transition-all duration-300 
+    transform hover:-translate-y-0.5 hover:shadow-lg
+    disabled:opacity-50 disabled:cursor-not-allowed
+    focus:outline-none focus:ring-2 focus:ring-[#181717] focus:ring-offset-2;
+  }
+
+  .btn-outline {
+    @apply px-6 py-3 border-2 border-[#181717] text-[#181717] rounded-lg 
+    hover:bg-[#181717] hover:text-white transition-all duration-300 
+    transform hover:-translate-y-0.5 hover:shadow-lg
+    disabled:opacity-50 disabled:cursor-not-allowed
+    focus:outline-none focus:ring-2 focus:ring-[#181717] focus:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply px-6 py-3 text-[#181717] rounded-lg 
+    hover:bg-[#181717]/5 transition-all duration-300 
+    transform hover:-translate-y-0.5
+    disabled:opacity-50 disabled:cursor-not-allowed
+    focus:outline-none focus:ring-2 focus:ring-[#181717] focus:ring-offset-2;
+  }
+
+  /* Modern Card Styles */
+  .card-modern {
+    @apply bg-white rounded-xl shadow-sm hover:shadow-md 
+    transition-all duration-300 overflow-hidden
+    border border-gray-100 hover:border-[#181717]/10;
+  }
+
+  /* Modern Input Styles */
+  .input-modern {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-200 
+    focus:border-[#181717] focus:ring-2 focus:ring-[#181717]/20 
+    transition-all duration-300
+    placeholder:text-gray-400;
+  }
+
+  /* Responsive Container */
+  .container-responsive {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+
+  /* Modern Section Styles */
+  .section-modern {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  /* Typography */
+  .heading-1 {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-bold text-[#181717] leading-tight;
+  }
+
+  .heading-2 {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold text-[#181717] leading-tight;
+  }
+
+  .heading-3 {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-[#181717] leading-tight;
+  }
+
+  .text-body {
+    @apply text-base sm:text-lg text-gray-600 leading-relaxed;
+  }
 }
 
 /* Custom scrollbar */
@@ -139,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Improved focus styles */
 :focus-visible {
-  @apply outline-none ring-2 ring-luxury-400 ring-offset-2 ring-offset-white rounded-lg;
+  @apply outline-none ring-2 ring-[#181717] ring-offset-2 ring-offset-white rounded-lg;
 }
 
 /* Animation classes */
