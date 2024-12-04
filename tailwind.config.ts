@@ -19,6 +19,18 @@ export default {
     },
     extend: {
       colors: {
+        luxury: {
+          50: '#FAFAFA',   // Almost white
+          100: '#F5F5F5',  // Light gray
+          200: '#E5E5E5',  // Lighter gray
+          300: '#D4D4D4',  // Medium gray
+          400: '#A3A3A3',  // Warm gray
+          500: '#737373',  // Main accent
+          600: '#525252',  // Deep accent
+          700: '#404040',  // Dark accent
+          800: '#262626',  // Nearly black
+          900: '#181717',  // True black (specified color)
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -52,21 +64,6 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))'
-        }
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
@@ -87,11 +84,42 @@ export default {
             transform: "translateY(0)",
           },
         },
+        "slide-in": {
+          "0%": {
+            transform: "translateX(-100%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateX(0)",
+            opacity: "1",
+          },
+        },
+        "scale-in": {
+          "0%": {
+            transform: "scale(0.95)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "scale(1)",
+            opacity: "1",
+          },
+        },
+        float: {
+          "0%, 100%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(-5px)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out",
+        "slide-in": "slide-in 0.5s ease-out",
+        "scale-in": "scale-in 0.3s ease-out",
+        "float": "float 3s ease-in-out infinite",
       },
     },
   },

@@ -1,20 +1,10 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { useRef, useEffect, useState } from 'react';
-import { FaSearch, FaArrowRight, FaChevronDown } from 'react-icons/fa';
-import { useScrollTo } from '@/hooks/useScrollTo';
-import { ScrollReveal } from '@/components/common/ScrollReveal';
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 }
-};
+import { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { LoadingState } from './Hero/LoadingState';
+import { VideoBackground } from './Hero/VideoBackground';
+import { HeroContent } from './Hero/HeroContent';
 
 const HeroSection = () => {
-  const navigate = useNavigate();
-  const scrollTo = useScrollTo();
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -28,47 +18,17 @@ const HeroSection = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  useEffect(() => {
-    if (!videoRef.current) return;
-    const video = videoRef.current;
-    const handleLoadedData = () => {
-      setIsVideoLoaded(true);
-      video.play().catch(console.error);
-    };
-    video.addEventListener('loadeddata', handleLoadedData);
-    video.load();
-    return () => {
-      video.removeEventListener('loadeddata', handleLoadedData);
-    };
-  }, []);
-
-  const videoSource = isMobile 
-    ? '/videos/optimized/hero-mobile.mp4'
-    : '/videos/optimized/hero.mp4';
+  const handleVideoLoad = () => {
+    setIsVideoLoaded(true);
+  };
 
   return (
-    <section id="hero" className="relative min-h-[100svh] md:min-h-screen w-full overflow-hidden bg-gray-900">
-      {/* Loading State */}
+    <section id="hero" className="relative min-h-[100svh] md:min-h-screen w-full overflow-hidden bg-luxury-900">
       <AnimatePresence>
-        {!isVideoLoaded && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 flex items-center justify-center bg-gray-900 z-20"
-          >
-            <div className="text-white/80 flex flex-col items-center">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="w-12 h-12 border-t-2 border-r-2 border-white rounded-full"
-              />
-              <span className="mt-4 text-sm font-light">Loading amazing views...</span>
-            </div>
-          </motion.div>
-        )}
+        {!isVideoLoaded && <LoadingState />}
       </AnimatePresence>
 
+<<<<<<< HEAD
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <div className="absolute inset-4 md:inset-6 lg:inset-8 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl">
@@ -257,6 +217,17 @@ const HeroSection = () => {
           )}
         </AnimatePresence>
       </div>
+=======
+      <VideoBackground 
+        onLoadedData={handleVideoLoad}
+        isVideoLoaded={isVideoLoaded}
+        isMobile={isMobile}
+      />
+
+      <AnimatePresence mode="wait">
+        {isVideoLoaded && <HeroContent />}
+      </AnimatePresence>
+>>>>>>> 4783a59b675a86eddc3f14a25949eb4195f0e98d
     </section>
   );
 };

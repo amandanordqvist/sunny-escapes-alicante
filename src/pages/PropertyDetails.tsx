@@ -18,10 +18,11 @@ const PropertyDetails = () => {
           *,
           property_media(*),
           property_features(
+            feature_id,
             features(*)
           )
         `)
-        .eq("id", id)
+        .eq('id', id)
         .single();
 
       if (error) throw error;
