@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { LoadingState } from './Hero/LoadingState';
 import { VideoBackground } from './Hero/VideoBackground';
 import { HeroContent } from './Hero/HeroContent';
+import { FaSearch, FaArrowRight } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import ScrollReveal from '@/components/common/ScrollReveal';
+import { scrollTo } from '@/hooks/useScrollTo';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -54,16 +59,15 @@ const HeroSection = () => {
         className="absolute inset-4 md:inset-6 lg:inset-8 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-b from-black/40 via-black/20 to-black/60 backdrop-blur-[2px]"
       />
 
-      {/* Content Container */}
-      <div className="relative container mx-auto min-h-[100svh] md:min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-16 md:py-20 lg:py-24">
-        <AnimatePresence mode="wait">
-          {isVideoLoaded && (
-            <motion.div 
-              className="w-full max-w-5xl mx-auto text-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
+      <AnimatePresence mode="wait">
+        {isVideoLoaded && (
+          <motion.div 
+            className="relative container mx-auto min-h-[100svh] md:min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-16 md:py-20 lg:py-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="w-full max-w-5xl mx-auto text-center">
               {/* Enhanced Main Heading */}
               <ScrollReveal delay={0.5}>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-white mb-6 md:mb-8 tracking-tight leading-[1.1]">
@@ -89,7 +93,7 @@ const HeroSection = () => {
                   Discover luxury properties in Spain's most 
                   <span className="relative inline-block px-2">
                     beautiful
-                    <div className="absolute inset-0 bg-sky-500/10 rounded-lg -rotate-1"></div>
+                    <div className="absolute inset-0 bg-luxury-200/10 rounded-lg -rotate-1"></div>
                   </span> 
                   coastal paradise
                 </p>
@@ -178,7 +182,6 @@ const HeroSection = () => {
                     group
                   "
                 >
-                  {/* Text */}
                   <span className="
                     text-[10px] sm:text-xs
                     uppercase tracking-[0.2em]
@@ -190,7 +193,6 @@ const HeroSection = () => {
                     Scroll
                   </span>
                   
-                  {/* Modern Scroll Line Animation */}
                   <motion.div 
                     className="relative w-[1px] h-8 overflow-hidden"
                     initial={{ opacity: 0.6 }}
