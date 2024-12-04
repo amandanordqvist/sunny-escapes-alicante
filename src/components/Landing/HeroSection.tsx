@@ -70,19 +70,21 @@ const HeroSection = () => {
       </AnimatePresence>
 
       {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden aspect-[21/9] shadow-2xl">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={`absolute w-full h-full object-cover scale-[1.02] transition-opacity duration-1000
-            ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
-        >
-          <source src={videoSource} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <div className="absolute inset-4 md:inset-6 lg:inset-8 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl">
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={`absolute w-full h-full object-cover scale-[1.02] transition-opacity duration-1000
+              ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <source src={videoSource} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
 
       {/* Enhanced Gradient Overlay */}
@@ -90,118 +92,165 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: isVideoLoaded ? 1 : 0 }}
         transition={{ duration: 1.5 }}
-        className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 backdrop-blur-[1px]"
+        className="absolute inset-4 md:inset-6 lg:inset-8 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-b from-black/40 via-black/20 to-black/60 backdrop-blur-[2px]"
       />
 
       {/* Content Container */}
-      <div className="relative container mx-auto min-h-[100svh] md:min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-20 md:py-24">
+      <div className="relative container mx-auto min-h-[100svh] md:min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 py-16 md:py-20 lg:py-24">
         <AnimatePresence mode="wait">
           {isVideoLoaded && (
             <motion.div 
-              className="max-w-5xl mx-auto text-center"
+              className="w-full max-w-5xl mx-auto text-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
               {/* Enhanced Main Heading */}
               <ScrollReveal delay={0.5}>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-white mb-6 md:mb-8 tracking-tight leading-[1.1]">
                   Your Dream Home <br />
                   <span className="relative inline-block">
-                    in <span className="text-amber-300 font-extrabold">Alicante</span> Awaits
-                    <div className="absolute -bottom-4 left-0 w-full">
-                      <div className="h-1 bg-gradient-to-r from-transparent via-sky-400 to-transparent rounded-full" />
-                      <div className="h-px mt-1 bg-gradient-to-r from-transparent via-amber-300/50 to-transparent rounded-full" />
-                    </div>
+                    in <span className="bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 text-transparent bg-clip-text font-bold">Alicante</span> Awaits
+                    <motion.div 
+                      className="absolute -bottom-2 md:-bottom-4 left-0 w-full"
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 1, delay: 1 }}
+                    >
+                      <div className="h-[2px] md:h-1 bg-gradient-to-r from-transparent via-amber-300 to-transparent rounded-full opacity-90" />
+                      <div className="h-px mt-[2px] md:mt-1 bg-gradient-to-r from-transparent via-amber-300/30 to-transparent rounded-full" />
+                    </motion.div>
                   </span>
                 </h1>
               </ScrollReveal>
 
               {/* Enhanced Subheading */}
               <ScrollReveal delay={0.7}>
-                <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-12 max-w-2xl mx-auto font-light">
-                  Discover luxury properties in Spain's most beautiful coastal paradise
+                <p className="text-base sm:text-lg md:text-xl text-white/80 mb-10 md:mb-14 max-w-2xl mx-auto font-light leading-relaxed px-4 tracking-wide">
+                  Discover luxury properties in Spain's most 
+                  <span className="relative inline-block px-2">
+                    beautiful
+                    <div className="absolute inset-0 bg-sky-500/10 rounded-lg -rotate-1"></div>
+                  </span> 
+                  coastal paradise
                 </p>
               </ScrollReveal>
 
               {/* Enhanced CTA Section */}
               <ScrollReveal delay={0.9}>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-5 px-4 sm:px-0">
                   {/* Primary CTA */}
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => navigate('/properties')}
                     className="
-                      group
-                      px-8 py-4
-                      bg-sky-500 hover:bg-sky-600
-                      text-white
+                      relative group
+                      px-6 py-3
+                      bg-white
+                      text-gray-900
                       rounded-xl
-                      font-medium
-                      flex items-center gap-3
-                      shadow-lg shadow-sky-500/20
-                      hover:shadow-xl hover:shadow-sky-500/30
+                      font-medium text-base
+                      flex items-center justify-center gap-2.5
+                      shadow-[0_0_0_1.5px_rgba(255,255,255,0.1)]
+                      hover:shadow-[0_0_0_1.5px_rgba(255,255,255,0.2)]
                       transition-all duration-300
-                      hover:-translate-y-1
-                      min-w-[200px]
+                      overflow-hidden
+                      w-full sm:w-[180px]
                     "
                   >
-                    <FaSearch className="w-4 h-4" />
-                    Explore Properties
-                  </button>
+                    <span className="relative z-10 flex items-center gap-2.5">
+                      <FaSearch className="w-4 h-4" />
+                      <span>Explore</span>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white via-gray-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </motion.button>
 
                   {/* Secondary CTA */}
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => navigate('/contact')}
                     className="
-                      group
-                      px-8 py-4
-                      border border-white/30
-                      hover:border-white/50
+                      relative group
+                      px-6 py-3
+                      border border-white/20
                       text-white
                       rounded-xl
-                      font-medium
-                      flex items-center gap-3
-                      hover:bg-white/10
+                      font-medium text-base
+                      flex items-center justify-center gap-2.5
+                      backdrop-blur-sm
+                      hover:border-white/30
+                      hover:bg-white/5
                       transition-all duration-300
-                      hover:-translate-y-1
-                      min-w-[200px]
+                      overflow-hidden
+                      w-full sm:w-[180px]
                     "
                   >
-                    Contact Us
-                    <FaArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </button>
+                    <span className="relative z-10 flex items-center gap-2.5">
+                      Contact
+                      <FaArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                  </motion.button>
                 </div>
               </ScrollReveal>
 
               {/* Trust Indicators */}
               <ScrollReveal delay={1.1}>
-                <div className="mt-16 text-white/60 flex flex-col items-center">
-                  <div className="flex items-center gap-3 text-sm font-light">
-                    <span>Trusted by</span>
-                    <div className="w-12 h-px bg-white/20" />
-                    <span>200+ Happy Homeowners</span>
-                    <div className="w-12 h-px bg-white/20" />
-                    <span>Since 2013</span>
+                <div className="mt-12 sm:mt-16 md:mt-20 text-white/70 flex flex-col items-center px-4">
+                  <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-xs sm:text-sm font-light tracking-wider">
+                    <span className="uppercase">Trusted by</span>
+                    <div className="w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                    <span className="font-medium">200+ Happy Homeowners</span>
+                    <div className="w-12 md:w-16 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                    <span className="uppercase">Since 2013</span>
                   </div>
                 </div>
               </ScrollReveal>
 
-              {/* Scroll Down Indicator */}
+              {/* Modernized Scroll Indicator */}
               <ScrollReveal delay={1.3}>
                 <motion.button
                   onClick={() => scrollTo('about')}
                   className="
-                    absolute bottom-12 left-1/2 -translate-x-1/2
-                    text-white/80 hover:text-white
-                    transition-colors duration-300
-                    flex flex-col items-center gap-2
+                    absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2
+                    flex flex-col items-center
                     cursor-pointer
+                    group
                   "
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <span className="text-sm font-light">Scroll to explore</span>
-                  <FaChevronDown className="w-4 h-4 animate-bounce" />
+                  {/* Text */}
+                  <span className="
+                    text-[10px] sm:text-xs
+                    uppercase tracking-[0.2em]
+                    text-white/60 group-hover:text-white/90
+                    transition-colors duration-300
+                    mb-3
+                    font-medium
+                  ">
+                    Scroll
+                  </span>
+                  
+                  {/* Modern Scroll Line Animation */}
+                  <motion.div 
+                    className="relative w-[1px] h-8 overflow-hidden"
+                    initial={{ opacity: 0.6 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+                  >
+                    <motion.div 
+                      className="absolute top-0 left-0 w-full bg-gradient-to-b from-white/40 via-white to-white/40"
+                      style={{ height: '200%' }}
+                      animate={{ 
+                        y: ["0%", "100%"]
+                      }}
+                      transition={{ 
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+                  </motion.div>
                 </motion.button>
               </ScrollReveal>
             </motion.div>
