@@ -7,8 +7,9 @@ import { FaSearch, FaArrowRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import ScrollReveal from '@/components/common/ScrollReveal';
 import { scrollTo } from '@/hooks/useScrollTo';
+import React from 'react';
 
-const HeroSection = () => {
+const HeroSection: React.FC = () => {
   const navigate = useNavigate();
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -34,22 +35,11 @@ const HeroSection = () => {
       </AnimatePresence>
 
       {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <div className="absolute inset-4 md:inset-6 lg:inset-8 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl">
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className={`absolute w-full h-full object-cover scale-[1.02] transition-opacity duration-1000
-              ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
-          >
-            <source src={videoSource} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </div>
+      <VideoBackground 
+        onLoadedData={handleVideoLoad}
+        isVideoLoaded={isVideoLoaded}
+        isMobile={isMobile}
+      />
 
       {/* Enhanced Gradient Overlay */}
       <motion.div 
@@ -214,15 +204,10 @@ const HeroSection = () => {
                   </motion.div>
                 </motion.button>
               </ScrollReveal>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </div>
-      <VideoBackground 
-        onLoadedData={handleVideoLoad}
-        isVideoLoaded={isVideoLoaded}
-        isMobile={isMobile}
-      />
 
       <AnimatePresence mode="wait">
         {isVideoLoaded && <HeroContent />}
