@@ -28,7 +28,6 @@ const HeroSection = () => {
         {!isVideoLoaded && <LoadingState />}
       </AnimatePresence>
 
-<<<<<<< HEAD
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <div className="absolute inset-4 md:inset-6 lg:inset-8 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl">
@@ -217,7 +216,6 @@ const HeroSection = () => {
           )}
         </AnimatePresence>
       </div>
-=======
       <VideoBackground 
         onLoadedData={handleVideoLoad}
         isVideoLoaded={isVideoLoaded}
@@ -227,7 +225,6 @@ const HeroSection = () => {
       <AnimatePresence mode="wait">
         {isVideoLoaded && <HeroContent />}
       </AnimatePresence>
->>>>>>> 4783a59b675a86eddc3f14a25949eb4195f0e98d
     </section>
   );
 };
