@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LoadingState } from './Hero/LoadingState';
 import { VideoBackground } from './Hero/VideoBackground';
-import { HeroContent } from './Hero/HeroContent';
 import { FaSearch, FaArrowRight } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import ScrollReveal from '@/components/common/ScrollReveal';
-import { scrollTo } from '@/hooks/useScrollTo';
-import React from 'react';
+import { ScrollReveal } from '@/components/common/ScrollReveal';
+import { useScrollTo } from '@/hooks/useScrollTo';
 
-const HeroSection: React.FC = () => {
+const HeroSection = () => {
   const navigate = useNavigate();
+  const scrollTo = useScrollTo();
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -29,24 +28,15 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section id="hero" className="relative min-h-[100svh] md:min-h-screen w-full overflow-hidden bg-luxury-900">
+    <div className="relative min-h-[100svh] md:min-h-screen w-full overflow-hidden bg-luxury-900">
       <AnimatePresence>
         {!isVideoLoaded && <LoadingState />}
       </AnimatePresence>
 
-      {/* Video Background */}
       <VideoBackground 
         onLoadedData={handleVideoLoad}
         isVideoLoaded={isVideoLoaded}
         isMobile={isMobile}
-      />
-
-      {/* Enhanced Gradient Overlay */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isVideoLoaded ? 1 : 0 }}
-        transition={{ duration: 1.5 }}
-        className="absolute inset-4 md:inset-6 lg:inset-8 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-b from-black/40 via-black/20 to-black/60 backdrop-blur-[2px]"
       />
 
       <AnimatePresence mode="wait">
@@ -205,14 +195,10 @@ const HeroSection: React.FC = () => {
                 </motion.button>
               </ScrollReveal>
             </div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <AnimatePresence mode="wait">
-        {isVideoLoaded && <HeroContent />}
+          </motion.div>
+        )}
       </AnimatePresence>
-    </section>
+    </div>
   );
 };
 

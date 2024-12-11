@@ -1,7 +1,5 @@
-import { useCallback } from 'react';
-
 export const useScrollTo = () => {
-  const scrollTo = useCallback((elementId: string) => {
+  const scrollTo = (elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({
@@ -9,7 +7,7 @@ export const useScrollTo = () => {
         block: 'start',
       });
     }
-  }, []);
+  };
 
   return scrollTo;
 };

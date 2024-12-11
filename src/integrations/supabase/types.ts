@@ -9,6 +9,71 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      agents: {
+        Row: {
+          bio: string | null
+          created_at: string
+          current_project_id: string | null
+          email: string
+          id: string
+          name: string
+          phone: string | null
+          photo_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          current_project_id?: string | null
+          email: string
+          id?: string
+          name: string
+          phone?: string | null
+          photo_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          current_project_id?: string | null
+          email?: string
+          id?: string
+          name?: string
+          phone?: string | null
+          photo_url?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agents_current_project_id_fkey"
+            columns: ["current_project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       features: {
         Row: {
           category: string
@@ -77,9 +142,116 @@ export type Database = {
           },
         ]
       }
+      project_media: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_main: boolean | null
+          media_type: string | null
+          position: number | null
+          project_id: string
+          title: string | null
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_main?: boolean | null
+          media_type?: string | null
+          position?: number | null
+          project_id: string
+          title?: string | null
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_main?: boolean | null
+          media_type?: string | null
+          position?: number | null
+          project_id?: string
+          title?: string | null
+          updated_at?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_media_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          agent_id: string | null
+          amenities: string[] | null
+          completion_date: string | null
+          created_at: string
+          description: string | null
+          features: Json | null
+          id: string
+          location: string | null
+          price_range_max: number | null
+          price_range_min: number | null
+          status: string | null
+          title: string
+          total_units: number | null
+          updated_at: string
+        }
+        Insert: {
+          agent_id?: string | null
+          amenities?: string[] | null
+          completion_date?: string | null
+          created_at?: string
+          description?: string | null
+          features?: Json | null
+          id?: string
+          location?: string | null
+          price_range_max?: number | null
+          price_range_min?: number | null
+          status?: string | null
+          title: string
+          total_units?: number | null
+          updated_at?: string
+        }
+        Update: {
+          agent_id?: string | null
+          amenities?: string[] | null
+          completion_date?: string | null
+          created_at?: string
+          description?: string | null
+          features?: Json | null
+          id?: string
+          location?: string | null
+          price_range_max?: number | null
+          price_range_min?: number | null
+          status?: string | null
+          title?: string
+          total_units?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       properties: {
         Row: {
           address: string | null
+          agent_id: string | null
           bathrooms: number | null
           bedrooms: number | null
           city: string
@@ -111,6 +283,7 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          agent_id?: string | null
           bathrooms?: number | null
           bedrooms?: number | null
           city: string
@@ -142,6 +315,7 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          agent_id?: string | null
           bathrooms?: number | null
           bedrooms?: number | null
           city?: string
@@ -171,7 +345,15 @@ export type Database = {
           updated_at?: string | null
           views_count?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "properties_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       property_features: {
         Row: {
@@ -196,6 +378,35 @@ export type Database = {
           },
           {
             foreignKeyName: "property_features_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_likes: {
+        Row: {
+          created_at: string | null
+          id: string
+          property_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          property_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          property_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_likes_property_id_fkey"
             columns: ["property_id"]
             isOneToOne: false
             referencedRelation: "properties"
@@ -247,12 +458,339 @@ export type Database = {
           },
         ]
       }
+      property_shares: {
+        Row: {
+          created_at: string | null
+          id: string
+          property_id: string | null
+          share_type: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          property_id?: string | null
+          share_type?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          property_id?: string | null
+          share_type?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_shares_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wrappers_fdw_stats: {
+        Row: {
+          bytes_in: number | null
+          bytes_out: number | null
+          create_times: number | null
+          created_at: string
+          fdw_name: string
+          metadata: Json | null
+          rows_in: number | null
+          rows_out: number | null
+          updated_at: string
+        }
+        Insert: {
+          bytes_in?: number | null
+          bytes_out?: number | null
+          create_times?: number | null
+          created_at?: string
+          fdw_name: string
+          metadata?: Json | null
+          rows_in?: number | null
+          rows_out?: number | null
+          updated_at?: string
+        }
+        Update: {
+          bytes_in?: number | null
+          bytes_out?: number | null
+          create_times?: number | null
+          created_at?: string
+          fdw_name?: string
+          metadata?: Json | null
+          rows_in?: number | null
+          rows_out?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      airtable_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      airtable_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      airtable_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      auth0_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      auth0_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      auth0_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      big_query_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      big_query_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      big_query_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      click_house_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      click_house_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      click_house_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      cognito_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      cognito_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      cognito_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      firebase_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      firebase_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      firebase_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      hello_world_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      hello_world_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      hello_world_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      logflare_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      logflare_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      logflare_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      mssql_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      mssql_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      mssql_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      redis_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      redis_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      redis_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      s3_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      s3_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      s3_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      stripe_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      stripe_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      stripe_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
+      wasm_fdw_handler: {
+        Args: Record<PropertyKey, never>
+        Returns: unknown
+      }
+      wasm_fdw_meta: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          version: string
+          author: string
+          website: string
+        }[]
+      }
+      wasm_fdw_validator: {
+        Args: {
+          options: string[]
+          catalog: unknown
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       energy_rating: "A" | "B" | "C" | "D" | "E" | "F" | "G"
